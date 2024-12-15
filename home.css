@@ -7,7 +7,7 @@ html, body {
 }
 
 header {
-    background: linear-gradient(90deg, #1e1f1f, #51565d);
+    background: linear-gradient(90deg,  #1e1f1f, #51565d);
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
@@ -74,103 +74,89 @@ input:focus {
     transform: scale(1);
 }
 
+
 .main {
     padding: 20px;
     flex: 1;
+}
+
+.reviews-section {
     background-color: #f9f9f9;
+    padding: 50px 20px;
+    text-align: center;
 }
 
-.all-products{
-    margin-top: 23px;
+.reviews-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: bold;
 }
 
-.catalog {
+.reviews-container {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
-    padding: 20px;
+    margin-bottom:50px ;
 }
 
-.card {
-    background-color: #fff;
+.review-card {
+    background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
-    overflow: hidden;
-    box-shadow:rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
-    display:flex;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-  
-.card:hover {
+
+.review-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.card-img {
-    width: 330px;
-    height: 300px;
+.review-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
     object-fit: cover;
-    border-bottom: 1px solid #e0e0e0;
-    transition: transform 0.3s ease;
 }
 
-.card:hover .card-img {
-    transform: scale(1.03);
-}
-
-.card-body {
-    padding: 15px;
-}
-
-.card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
+.review-name {
+    font-size: 1.2rem;
+    color: #333;
     margin-bottom: 10px;
-    color: #333;
-    text-align: center;
-    height: 50px;
+    font-weight: bold;
 }
 
-.card-text {
-    font-size: 15px;
+.review-text {
+    font-size: 1rem;
     color: #666;
-    height: 85px;
+    margin-bottom: 15px;
+}
+
+.review-rating {
+    font-size: 1.2rem;
+    color: black;
+}
+
+.review-btn{
+    margin-top: 60px;
+}
+
+.reviews-section {
+    background-color: #f9f9f9;
+    padding: 50px 20px;
     text-align: center;
 }
 
-.card-down{
-    padding-left: 35px;
-}
-
-.card-price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-.buy-button {
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-decoration: none;
-    padding: 10px 20px;
-}
-  
-.buy-button:hover {
-    transform: scale(1.05);
-}
-  
-.all-products{
+.social-media {
+    background-color: #f9f9f9;
+    padding: 50px 20px;
     text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px; 
-    color: #333;
 }
 
 .footer {
