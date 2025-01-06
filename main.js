@@ -7,7 +7,7 @@ function getProductHtml(product) {
         <p class="card-text" >${product.description}</p>
         <div class= "card-down">
             <span class="card-price" >Ціна ${product.price}$</</span>
-            <a href="#" class="buy-button" >Купить</a>
+            <button class="buy-button cart-btn" data-product='${JSON.stringify(product)}'>Купить</button>
         </div>
       </div>
     </div>
@@ -27,36 +27,95 @@ function getProductHtml(product) {
         productsContainer.innerHTML += getProductHtml(product)
       })
     }
+
+    let buyButtons = document.querySelectorAll('.cart-btn')
+
+    if(buyButtons.length > 0) {
+    buyButtons.forEach(function(button) {
+        button.addEventListener('click', addToCart)
+      })
+}
+
   })
   
-// Функция для отображения товаров в DOM
-function displayProducts(products) {
-  const productsContainer = document.querySelector('.catalog');
-  productsContainer.innerHTML = ''; // очищаем контейнер перед добавлением новых товаров
+class Cart {
+  constructor() {
+      this.items = {}
+      this.total = 0
+      this.loadCartToCookies()
+  }
 
-  products.forEach(function(product) {
-      productsContainer.innerHTML += getProductHtml(product);
-  });
+  addItem(item) {
+      if(this.items[item.title]) {
+          this.items[item.title].quantity += 1
+      } else {
+          this.items[item.title] = item
+          this.items[item.title].quantity = 1
+      }
+      this.saveCartToCookies()
+  }
+
+  saveCartToCookies() {
+      let cartJSON = JSON.stringify(this.items)
+      document.cookie = `cart=${cartJSON}; max-age=${60 * 60 * 24 * 7}; path=/`
+
+      console.log(document.cookie)
+  }
+
+  loadCartToCookies() {
+      let cartCookies = getCookieValue('cart');
+
+      if (cartCookies && cartCookies !== '') {
+          this.items = JSON.parse(cartCookies)
+      }
+  }
 }
 
-// Функция для фильтрации товаров по поисковому запросу
-function filterProducts(query, products) {
-  const filteredProducts = products.filter(product => 
-      product.title.toLowerCase().includes(query.toLowerCase()) || 
-      product.description.toLowerCase().includes(query.toLowerCase())
-  );
-  displayProducts(filteredProducts);
+let cart = new Cart();
+
+
+function addToCart(event) {
+  const productData = event.target.getAttribute('data-product')
+  const product = JSON.parse(productData)
+
+  cart.addItem(product)
 }
 
-// Обработчик поиска
-document.getElementById('search-input').addEventListener('input', function(event) {
-  const query = event.target.value;
-  getProducts().then(function(products) {
-      filterProducts(query, products);
-  });
-});
+function getCookieValue(cookieName) {
+  const cookies = document.cookie.split('; ');
+  for (const cookie of cookies) {
+      const [name, value] = cookie.split('=');
+      if (name === cookieName) {
+          return decodeURIComponent(value);
+      }
+  }
+  return null;
+}
 
-// Загружаем и отображаем все товары при загрузке страницы
-getProducts().then(function(products) {
-  displayProducts(products);
-});
+function getCartProductHtml(item) {
+  return `
+      <div style="border: 1px solid black">
+          <p>${item.title}</p>
+          <p>${item.price}</p>
+          <p>${item.quantity}</p>
+      </div>
+`
+}
+
+function showCart() {
+  const cartContainer = document.querySelector('.cart-container')
+  cartContainer.innerHTML = ''
+  for (let key in cart.items) {
+      cartContainer.innerHTML += getCartProductHtml(cart.items[key])
+  }
+
+  cart.loadCartToCookies()
+}
+
+showCart()
+
+
+
+
+
+
