@@ -13,30 +13,68 @@ function getProductHtml(product) {
     </div>
     `
   }
-  
-  async function getProducts() {
-    const response = await fetch('products.json')
-    return await response.json()
+
+function displayProducts(products) {
+  const productsContainer = document.querySelector('.catalog');
+  productsContainer.innerHTML = '';
+
+  if (products.length === 0) {
+      productsContainer.innerHTML = '<p>Товари не знайдено</p>';
   }
-  
-  getProducts().then(function (products) {
-    const productsContainer = document.querySelector('.catalog')
-  
-    if (products) {
-      products.forEach(function (product) {
-        productsContainer.innerHTML += getProductHtml(product)
-      })
-    }
 
-    let buyButtons = document.querySelectorAll('.cart-btn')
+  products.forEach(function (product) {
+      productsContainer.innerHTML += getProductHtml(product);
+  });
 
-    if(buyButtons.length > 0) {
-    buyButtons.forEach(function(button) {
-        button.addEventListener('click', addToCart)
-      })
+  const buyButtons = productsContainer.querySelectorAll('.cart-btn');
+  buyButtons.forEach(function (button) {
+      button.addEventListener('click', addToCart);
+  });}
+
+function filterProducts(query, products) {
+    const filteredProducts = products.filter(product => 
+        product.title.toLowerCase().includes(query.toLowerCase()) || 
+        product.description.toLowerCase().includes(query.toLowerCase())
+    );
+    displayProducts(filteredProducts); 
 }
 
-  })
+async function getProducts() {
+    const response = await fetch('products.json');
+    return await response.json();
+}
+
+getProducts().then(function(products) {
+    displayProducts(products);
+    document.getElementById('search-input').addEventListener('input', function(event) {
+        const query = event.target.value;
+        filterProducts(query, products);
+    });
+});
+  
+async function getProducts() {
+  const response = await fetch('products.json')
+  return await response.json()
+}
+  
+getProducts().then(function (products) {
+  const productsContainer = document.querySelector('.catalog')
+  
+  if (products) {
+    products.forEach(function (product) {
+      productsContainer.innerHTML += getProductHtml(product)
+    })
+  }
+
+  let buyButtons = document.querySelectorAll('.cart-btn')
+
+  if(buyButtons.length > 0) {
+  buyButtons.forEach(function(button) {
+      button.addEventListener('click', addToCart)
+    })
+}
+
+})
   
 class Cart {
   constructor() {
@@ -94,11 +132,15 @@ function getCookieValue(cookieName) {
 
 function getCartProductHtml(item) {
   return `
-      <div style="border: 1px solid black">
-          <p>${item.title}</p>
-          <p>${item.price}</p>
-          <p>${item.quantity}</p>
+      <div class="cart-item">
+
+      <div class="cart-item-details">
+        <h3 class="cart-item-title">${item.title}</h3>
+        <p class="cart-item-price">Ціна: ${item.price}$ </p>
+        <p class="cart-item-quantity">Кількість: ${item.quantity}</p>
       </div>
+      <button class="cart-item-remove-btn" data-title="${item.title}">Видалити</button>
+    </div>
 `
 }
 
@@ -113,6 +155,7 @@ function showCart() {
 }
 
 showCart()
+
 
 
 

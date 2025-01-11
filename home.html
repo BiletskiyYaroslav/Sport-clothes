@@ -22,6 +22,13 @@
         </nav>
     </header>
     <main>
+        <section class="welcome-section">
+            <h2 class="welcome-title">Ласкаво просимо на наш сайт!</h2>
+            <p class="welcome-description">
+                Ми раді бачити вас на нашому онлайн-магазині. Тут ви знайдете товари найвищої якості, 
+                швидку доставку та чудовий сервіс. Наша мета — зробити ваші покупки зручними, швидкими та приємними!
+            </p>
+        </section>
         <section class="benefits-section">
             <h2 class="benefits-title">Чому обирають нас?</h2>
             <ul class="benefits-list">
@@ -80,10 +87,29 @@
                         <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
-                <a href="Index.html">
-                    <button class="btn-12 review-btn"><span>Залишити відгук</span></button>
-                </a>
+                <button class="btn-12 review-btn" id="openModalBtn"><span>Залишити відгук</span></button>
+                <div id="reviewModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn">&times;</span>
+                        <h2>Залиште свій відгук</h2>
+                        <form id="reviewForm">
+                            <label for="name">Ваше ім'я:</label>
+                            <input type="text" id="name" name="name" required>
+                            <label for="review">Ваш відгук:</label>
+                            <textarea id="review" name="review" rows="4" required></textarea>
+                            <label for="rating">Оцінка:</label>
+                            <select id="rating" name="rating" required>
+                                <option value="5">⭐⭐⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="1">⭐</option>
+                            </select>
+                            <button type="submit" class="submit-btn">Відправити</button>
+                        </form>
+                    </div>
             </section>
+
         <div class ="social-media">
         <h1>Зв'язок з нами</h1>
             <ul class="wrapper">
@@ -131,7 +157,7 @@
     <footer class="footer">
         <p> 2024 </p>
     </footer>
-    <script src="main.js"></script>
+    <script src="home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
