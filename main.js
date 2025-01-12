@@ -93,6 +93,18 @@ class Cart {
       this.saveCartToCookies()
   }
 
+  removeItem(title) {
+    if (this.items[title]) {
+      delete this.items[title]; // Видаляємо товар з кошика
+      this.saveCartToCookies(); // Оновлюємо куки
+    }
+  }
+
+  clearCart() {
+    this.items = {}; // Очищаємо всі товари
+    this.saveCartToCookies(); // Оновлюємо куки
+  }
+
   saveCartToCookies() {
       let cartJSON = JSON.stringify(this.items)
       document.cookie = `cart=${cartJSON}; max-age=${60 * 60 * 24 * 7}; path=/`
@@ -110,6 +122,23 @@ class Cart {
 }
 
 let cart = new Cart();
+
+function buyAllItems() {
+  cart.clearCart(); // Очищаємо кошик
+  showCart(); // Оновлюємо відображення
+  alert('Всі товари куплено! Дякуємо за замовлення.');
+}
+
+// Прив'язуємо обробник до кнопки
+document.querySelector('.buy-all-btn').addEventListener('click', buyAllItems);
+
+function removeCartItem(event) {
+  const title = event.target.getAttribute('data-title'); // Отримуємо назву товару
+  cart.removeItem(title); // Видаляємо товар з кошика
+  showCart(); // Оновлюємо відображення кошика
+  alert(`Товар "${title}" успішно видалено з кошика.`);
+}
+
 
 
 function addToCart(event) {
@@ -150,6 +179,12 @@ function showCart() {
   for (let key in cart.items) {
       cartContainer.innerHTML += getCartProductHtml(cart.items[key])
   }
+
+  const removeButtons = cartContainer.querySelectorAll('.cart-item-remove-btn');
+  removeButtons.forEach(button => {
+    button.addEventListener('click', removeCartItem);
+  });
+
 
   cart.loadCartToCookies()
 }
