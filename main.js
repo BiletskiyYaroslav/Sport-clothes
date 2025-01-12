@@ -146,6 +146,8 @@ function addToCart(event) {
   const product = JSON.parse(productData)
 
   cart.addItem(product)
+
+  alert(`Товар \"${product.title}\" успішно додано до кошика!`);
 }
 
 function getCookieValue(cookieName) {
